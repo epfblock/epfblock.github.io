@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<table width="100%" height="114" border="0" cellpadding="20">
+  <tr>
+    <th align="left" scope="col"><a href="index.html"><img src="img/blog_log.jpg" width="150" height="127" /></a></th>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table width="100%" border="0">
+  <tr>
+    <td> 一、什么是tcp/ip</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp/ip(Transmission ControlProtocal/Internet Protocal)即传输控制协议/网际协议,是由罗伯特·卡恩和温顿·瑟夫在1974年12月正式发表了TCP/IP协议并对其进行了详细的说明，TCP/IP协议不仅仅指的是TCP 和IP两个协议，而是指一个由FTP、SMTP、TCP、UDP、IP等协议构成的协议簇， 只是因为在TCP/IP协议中TCP协议和IP协议最具代表性，所以被称为TCP/IP协议。</td>
+  </tr>
+  <tr>
+    <td>二、什么是tcp</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp(Transmission ControlProtocal)是一种面向连接的、可靠的、基于字节流的传输层通信协议，由IETF的RFC793定义，tcp建立连接方式是三次握手，传输方式是传输确认，关闭连接是四次挥手。</td>
+  </tr>
+  <tr>
+    <td>三、什么是三次握手</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="img/屏幕截图 2022-06-01 112255.png" width="354" height="361" /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在TCP协议中，通信双方将通过三次TCP报文实现对以上信息的了解，并在此基础上建立一个TCP连接，而通信双方的三次TCP报文段的交换过程，也就是通常所说的TCP连接建立实现的三次握手(Three-Way Handshake)过程</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 第一次握手：建立连接时，客户端发送syn包到服务器，并进入SYN_SENT状态，等待服务器确认；(SYN：同步序列编号)</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 第二次握手：服务器收到syn包，必须确认客户端的SYN，同时自己也发送一个SYN包，即SYN+ACK包，此时服务器进入SYN_RECV状态。</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 第三次握手：客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK，此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 个人理解来说就是客户端向服务器发送连接请求，服务器收到后向客户端发送同意连接请求，最后客户端收到同意连接请求再向服务器发送确认收到请求，完成三次握手。</td>
+  </tr>
+  <tr>
+    <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 三次握手可以避免客户端发送syn包到服务器因为网络原因导致传输失败，而又恢复传输导致状态不一。</td>
+  </tr>
+  <tr>
+    <td>四、什么是传输确认</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 为了避免丢包和乱序问题，tcp会建立一个发送缓冲区(结构类似数组)用来存储发送端发送的内容，发送时会取缓冲区一部分内容，发送端发送的报文结构是：起始序列号、数据长度、数据内容，接受端收到报文后会发送确认报文ack(ack=序列号+长度)来确认下次的发送起始序列号。</td>
+  </tr>
+  <tr>
+    <td>五、什么是四次挥手</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="img/屏幕截图 2022-06-01 131346.png" width="354" height="473" /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 由于TCP连接是全双工的，因此每个方向都必须单独进行关闭。这原则是当一方完成它的数据发送任务后就能发送一个FIN来终止这个方向的连接。收到一个 FIN只意味着这一方向上没有数据流动，一个TCP连接在收到一个FIN后仍能发送数据。首先进行关闭的一方将执行主动关闭，而另一方执行被动关闭。</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 第一次挥手：TCP客户端发送一个FIN，用来关闭客户到服务器的数据传送。</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 第二次挥手： 服务器收到这个FIN，它发回一个ACK，确认序号为收到的序号加1。和SYN一样，一个FIN将占用一个序号。</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 第三次挥手：服务器关闭客户端的连接，发送一个FIN给客户端。</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 第四次挥手：客户端发回ACK报文确认，并将确认序号设置为收到序号加1。</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 个人理解来说就是客户端向服务端发送断开请求，服务端收到后向客户端发送确认请求，这时候服务端可以把还未发的数据发完，接下来再发送确认请求，客户端收到服务端的确认请求后，再发送一个确认请求，完成四次挥手。</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 四次挥手可以确保客户端和服务端都能可靠的关闭连接。</td>
+  </tr>
+  <tr>
+    <td>六、c/s模型</td>
+  </tr>
+  <tr>
+    <td><p><strong>注：一切已msdn(不是i tell you那个，而是microsoft docs)上的为准</strong></p></td>
+  </tr>
+  <tr>
+    <td><strong>1.服务端</strong></td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; (Windows平台)基本步骤(1).打开网络库(2).创建socket(3).bind绑定端口和地址(4).listen使套接字处于监听状态(5).accept创建客户端socket(6).recv接受||send发送</td>
+  </tr>
+  <tr>
+    <td> (1)打开网络库</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; #include&lt;WinSock2.h&gt;//windows提供的套接字函数的声明都封装在这里<br />  
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #pragma commet(lib,&quot;ws2_32.lib&quot;)//   
+    windows提供的套接字函数的实现都封装在这里，这个库文件一般电脑都有，如果没有这个库文件，网上也可以下载<br /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; WORD <strong>wdVersion</strong> =MAKEWORD(2,2) ;//WORD是u_short类型&nbsp;，<strong>wdVersion </strong>记录着要打开的库版本，MAKEWORD里传主版本和副版本，传的主版本超过目前最大主版本会默认使用当前最大版本，传的副版本超过目前最大副版本使用当前主版本的最大副版本。</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; WSAData <strong>wdSockMsg</strong>;//是一个WSAData结构的指针，详细记录了Windows套接字的相关信息</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; WSAStartup(<strong>wdVersion</strong>,&amp;<strong>wdSockMsg</strong>);// int WSAStartup&nbsp;(WORD&nbsp;wVersionRequired, [out] LPWSADATA&nbsp; lpWSAData  );启动网络库，会返回一个int类型的值，用于检测错误，如果返回值是0则没错误</td>
+  </tr>
+  <tr>
+    <td>//检查错误</td>
+  </tr>
+  <tr>
+    <td>int <strong>res</strong>=WSAStartup(wdVersion,&amp;wdSockMsg);//定义一个变量res来接收错误<br />
+if (<strong>res</strong>!=0)<br />
+{<br />
+switch (<strong>res</strong>)//以下错误摘自msdn<br />
+{<br />
+case WSASYSNOTREADY://错误：The underlying network subsystem is not ready for network communication.<br />
+std::cout &lt;&lt; &quot;请检查网络库&quot; &lt;&lt; std::endl;<br />
+break;<br />
+case WSAVERNOTSUPPORTED://错误：The version of Windows Sockets support requested is not provided by this particular Windows Sockets implementation.<br />
+std::cout &lt;&lt; &quot;请更新网络库&quot; &lt;&lt; std::endl;<br />
+break;<br />
+case WSAEINPROGRESS://错误：A blocking Windows Sockets 1.1 operation is in progress.<br />
+std::cout &lt;&lt; &quot;请重新启动软件&quot; &lt;&lt; std::endl;<br />
+break;<br />
+case WSAEPROCLIM://错误：A limit on the number of tasks supported by the Windows Sockets implementation has been reached.<br />
+std::cout &lt;&lt; &quot;请关闭其他程序，以提供本软件网络资源&quot; &lt;&lt; std::endl;<br />
+break;<br />
+default:<br />
+break;<br />
+}<br />
+return 0;<br />
+}</td>
+  </tr>
+  <tr>
+    <td>(2).创建socket</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; SOCKET <strong>socketserver</strong> = socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);//SOCKET WSAAPI socket(    [in] int af,    [in] int type,    [in] int protocol  );&nbsp;参数1.地址类型 参数2.套接字类型 3.协议类型</td>
+  </tr>
+  <tr>
+    <td>//返回值可以用INVALID_SOCKET检测是否出错</td>
+  </tr>
+  <tr>
+    <td> if (INVALID_SOCKET== <strong>socketserver</strong>)<br />
+{<br />
+int <strong>a</strong> = WSAGetLastError();//获得最近一次的错误码<br />
+std::cout&lt;&lt; <strong>a</strong>&lt;&lt;std::endl;<br />
+WSACleanup();//记得清理网络库<br />
+return 0;<br />
+}</td>
+  </tr>
+  <tr>
+    <td>(3).bind绑定端口和地址</td>
+  </tr>
+  <tr>
+    <td>sockaddr_in si;<br />
+si.sin_family = AF_INET;//地址类型<br />
+si.sin_port = htons(12345);//端口不要填已被占的 cmd命令netstat -anolfindstr&quot;端口号&quot;来检查是否被占用<br />
+si.sin_addr.S_un.S_addr = inet_addr(&quot;127.0.0.1&quot;);//127.0.0.1是回环地址用于本地测试，可以填服务器地址<br />
+bind(socketserver, (const struct sockaddr *)&amp;si, sizeof(si))//int bind(    [in] SOCKET         s,         const sockaddr *addr,    [in] int            namelen  );&nbsp;参数1.服务端的socket 参数2.端口号和ip 参数3.结构体缓冲区大小</td>
+  </tr>
+  <tr>
+    <td>(4).listen使套接字处于监听状态</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; listen(socketserver, SOMAXCONN)//int WSAAPI listen(    [in] SOCKET s,    [in] int    backlog  );&nbsp;参数1.服务端socket 参数2.队列(用来记录服务器来不及处理的client)最大长度&nbsp; 填SOMAXCONN让系统分配，也可以手动填参数,当运行完listen后，服务端就已经运行了 返回值可以用SOCKET_ERROR测试错误</td>
+  </tr>
+  <tr>
+    <td>(5).accept创建客户端socket</td>
+  </tr>
+  <tr>
+    <td> sockaddr_in clientmsg;<br />
+int len = sizeof(clientmsg);<br />
+SOCKET socketclient = accept(socketserver,(struct sockaddr *)&amp;clientmsg,&amp;len);//SOCKET WSAAPI accept(    [in]      SOCKET   s,    [out]     sockaddr *addr,    [in, out] int      *addrlen  );参数1.服务端socket 参数2.这里是系统记录客户端的信息，也可以填null来不记录客户端的信息&nbsp;参数3.同bind参数3&nbsp;运行到这里会进入阻塞，直到有客户端连上才会继续 返回值可以用INVALID_SOCKET来测试错误</td>
+  </tr>
+  <tr>
+    <td>(6).recv接受||send发送</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><p>char a[1500] = { 0 };//网络最大传输单元是1500，是传输的最优值，建议填1500<br />
+      send(socketclient, a, sizeof(a), 0)//int WSAAPI send(    [in] SOCKET     s,    [in] const char *buf,    [in] int        len,    [in] int        flags  );参数1.目标socket，服务端填客户端socket，客户端反之 参数2.发送的内容 参数3.发送内容的大小 参数4.数据的读取方式 一般填0就行 ，可以填MSG_OOB (带外数据:外带一个额外数据)也可以填MSG_DONTROUTE(Sends OOB data (stream-style socket such as SOCK_STREAM only.)<br />
+    </p></td>
+  </tr>
+  <tr>
+    <td>char a[1500] = { 0 };//网络最大传输单元是1500，是传输的最优值，建议填1500<br />
+ recv(socketclient, buf, 1499, 0);//int recv(    [in]  SOCKET s,    [out] char   *buf,    [in]  int    len,    [in]  int    flags  );&nbsp;参数1.目标socket，服务端填客户端socket，客户端反之 &nbsp;参数2.发送的内容 参数3.发送内容的大小 参数4.数据的读取方式 一般填0就行 ，可以填MSG_PEEK(窥视输入的数据。数据被复制到缓冲区中，但不会从输入队列中删除。也就是说假如读取前2个数据，数据因为不会被删除，会反复读取这几个)可以填MSG_OOB (带外数据:外带一个额外数据)也可以填MSG_WAITALL(缓冲区里数据大小要到参数3一样才开始读取)</td>
+  </tr>
+  <tr>
+    <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 记得在程序结尾关闭所有socket(关闭函数：closesocket(填要关闭的socket))和清理网络库(清理函数：WSACleanup())</td>
+  </tr>
+  <tr>
+    <td><strong>2.客户端</strong></td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; (Windows平台)基本步骤(1).打开网络库(2).创建socket(4)connect连接服务端(5).recv接受||send发送</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;偷懒一下直接到(4)</td>
+  </tr>
+  <tr>
+    <td>(4)connect连接服务端</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><p>struct sockaddr_in servermsg;<br />
+servermsg.sin_family = AF_INET;<br />
+servermsg.sin_port = htons(12345);<br />
+servermsg.sin_addr.S_un.S_addr = inet_addr(&quot;127.0.0.1&quot;);<br />
+connect(socketserver, (const struct sockaddr *)&amp;servermsg, sizeof(servermsg))//int WSAAPI connect(    [in] SOCKET         s,    [in] const sockaddr *name,    [in] int            namelen  );&nbsp;参数1.服务端的socket 参数2.端口号和ip 参数3.结构体缓冲区大小</p></td>
+  </tr>
+  <tr>
+    <td><strong>3.c/s特性分析</strong></td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 在服务端的accept函数，如果没有客户端连接，会阻塞，如果想多个客户端连接可以去设个数组来记录客户端，但是到accept函数处，如果连接的客户端没到数组的最大值仍会阻塞，而且recv函数和send函数会相互阻塞，所以最基本的c/s很难有程序用上。</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>自己写的<a href="resources/server.cpp">服务端</a>和<a href="resources/client.cpp">客户端</a></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>
