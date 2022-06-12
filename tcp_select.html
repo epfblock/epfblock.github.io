@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<table width="100%" height="114" border="0" cellpadding="20">
+  <tr>
+    <th align="left" scope="col"><a href="index.html"><img src="img/blog_log.jpg" width="150" height="127" /></a></th>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table width="100%" border="0">
+  <tr>
+    <td>一、select模型有什么用</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; select模型能解决accept和recv的没信号一直等待阻塞问题，但并不能解决执行的阻塞，实现原理就是建立一个数组，里面存放着socket，通过调用select函数来遍历数组来检查socket是否有信号以此来判断socket是否是accept还是recv</td>
+  </tr>
+  <tr>
+    <td>二、select模型</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 基本步骤(1).打开网络库(2).创建socket(3).bind绑定端口和地址(4).listen使套接字处于监听状态(5)select处理</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 再使用select函数前，还应该创建一个存放socket的数组，这是我们用fd_set来定义</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; fd_set <strong>allsockets</strong>;//fd_set是一个结构体，其定义如下，fd_conut记录着存入的个数，fd_array[]记录着socket的数组&nbsp;宏FD_SETSIZE定义为64 可以自己定义大小</td>
+  </tr>
+  <tr>
+    <td>typedef struct fd_set {<br />
+u_int fd_count;               /* how many are SET? */<br />
+SOCKET  fd_array[FD_SETSIZE];   /* an array of SOCKETs */<br />
+} fd_set;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;对fd_set操作的宏定义(1)FD_ZERO(&amp;对象)集合清零(将fd_count设置为0)(2)FD_SET(socket对象,&amp;对象)添加socket(3)FD_CLR(socket对象,&amp;对象)删除指定socket(4)FD_ISST(socket对象,&amp;对象)指定socket是否在集合中，返回true或false</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; select(0,&amp;readsockets,&amp;writesockets,&amp;errorsockets,0)//第一个参数为兼容berkeley sockets&nbsp;填0即可 第二个参数为检查有可读的参数 第三个参数为检查有可写的参数 第四个参数为检查是否有错误的参数第五个参数为数组检查等待时间 可以用timeval，(struct timeval {long    tv_sec;         /* seconds */ long    tv_usec;        /* and microseconds */};)结构体定义等待时间，如果填0则检查完数组后便立即结束select的检查，执行下面的语句，返回值如果为0则代表没信号，如果&gt;0则代表请求有信号了，若readsocket返回的是服务端的socket代表请求accept，如果是客户端的socket则可以recv了</td>
+  </tr>
+  <tr>
+    <td valign="top"> <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在结束记得closesocket();	</p>
+      <p>for (u_int i=0;i&lt;allsockets.fd_count;i++)<br />
+        {<br />
+        closesocket(allsockets.fd_array[i]);<br />
+        }
+      </p>
+    <p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>自己写<a href="resources/server(select).cpp">select模型</a></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>
