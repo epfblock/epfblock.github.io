@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<table width="100%" height="114" border="0" cellpadding="20">
+  <tr>
+    <th align="left" scope="col"><a href="index.html"><img src="img/blog_log.jpg" width="150" height="127" /></a></th>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table width="100%" border="0">
+  <tr>
+    <td>一、异步选择模型有什么用</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 异步选择模型可以说是对select的模型的优化，我们可以将事件投递给os用消息机制的形式来检测信号，对比select模型，在检测事件信号这方面是变成了异步，但是还是不能解决recv(send)函数执行时的阻塞</td>
+  </tr>
+  <tr>
+    <td>二、什么是消息机制</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 在Windows发生的一切操作都会装一个队列中，再被Windows来处理这些操作</td>
+  </tr>
+  <tr>
+    <td>三、异步选择模型</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 基本步骤(1).打开网络库(2).创建socket(3).bind绑定端口和地址(4).listen使套接字处于监听状态(5)WSAAsyncSelect事件投递(6)创建窗口(7)调用回调函数</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (5)WSAAsyncSelect<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+WSAAsyncSelect(socketserver, hWnd, UM_ASYNCSELECTMSG, FD_ACCEPT)//int WSAAsyncSelect(  _In_  SOCKET s,  _In_  HWND hWnd,  _In_  unsigned int wMsg,  _In_  long lEvent); <br />
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //参数1:服务端socket 参数2：窗口的句柄 参数3:投递的消息名称(可以这样宏定义WM_USER(系统已定义的宏)+1) 参数4:绑定的事件类型(同事件选择)<br />
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //返回值可以用SOCKET_ERROR检测错误</td>
+  </tr>
+  <tr>
+    <td><p>(7)调用回调函数<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 接下来就是窗口的回调函数了<br />   
+      &nbsp; &nbsp; &nbsp; &nbsp;  LRESULT CALLBACK WinBackProc(HWND hWnd, UINT msgid, WPARAM wparam, LPARAM lparam)<br />   
+      &nbsp; &nbsp; &nbsp; &nbsp; {<br />
+      &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; switch(msgid){<br />
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; case WSAAsyncSelect投递的消息名称：<br />
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }   <br />
+  </p></td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;SOCKET sock = (SOCKET)wparam;//wparam用于接收socket<br />      
+    &nbsp; &nbsp; &nbsp; 可以使用HIWORD(lparam)获取是否有错误,LOWORD(lparam)获取具体事件(可以用switch(LOWORD(lparam))来分类处理事件)<br /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp; &nbsp;&nbsp; 自己写的<a href="resources/server(asyncselect).cpp">服务端</a></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>
